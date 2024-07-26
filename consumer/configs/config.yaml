@@ -1,0 +1,10 @@
+db:
+  postgres:
+    host: "db"
+    port: "5432"
+    name: "kafka_test"
+    user: "kafka_test"
+kafka:
+  host: "kafka"
+  port: "9092"
+
