@@ -5,11 +5,11 @@ RUN  go mod download
 COPY db ./db
 COPY producer ./producer
 
+EXPOSE 8000
+
 RUN go build -o producer/main ./producer/main.go
 FROM alpine:3
 COPY --from=builder /build/producer/main /bin/main
 COPY producer/configs /configs
-
-EXPOSE 8000
 
 ENTRYPOINT ["/bin/main"]
