@@ -12,6 +12,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
+	"time"
 )
 
 func main() {
@@ -19,9 +20,28 @@ func main() {
 
 	conf := configs.Load()
 	//TODO: Create a new consumer
-	consumer, err := sarama.NewConsumer([]string{conf.Kafka.Host + ":" + conf.Kafka.Port}, nil)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Error creating consumer")
+	timeout := time.NewTicker(30 * time.Second)
+
+	var consumer sarama.Consumer
+	var err error
+	fl := false
+
+	for {
+		select {
+		case <-timeout.C:
+			log.Fatal().Msgf("sarama producer: %s", err)
+
+		default:
+			consumer, err = sarama.NewConsumer([]string{conf.Kafka.Host + ":" + conf.Kafka.Port}, nil)
+			if err == nil {
+				fl = true
+				break
+			}
+		}
+
+		if fl {
+			break
+		}
 	}
 	defer consumer.Close()
 

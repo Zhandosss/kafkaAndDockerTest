@@ -53,10 +53,26 @@ func main() {
 
 	e := echo.New()
 
+	timeout := time.NewTicker(30 * time.Second)
+
+	var producer sarama.SyncProducer
+	var err error
+	fl := false
 	//TODO: add kafka host and port to config
-	producer, err := sarama.NewSyncProducer([]string{conf.Kafka.Host + ":" + conf.Kafka.Port}, nil)
-	if err != nil {
-		log.Fatal().Msgf("Error creating producer: %s", err)
+	for {
+		select {
+		case <-timeout.C:
+			log.Fatal().Msgf("Error creating producer: %s", err)
+		default:
+			producer, err = sarama.NewSyncProducer([]string{conf.Kafka.Host + ":" + conf.Kafka.Port}, nil)
+			if err == nil {
+				fl = true
+				break
+			}
+		}
+		if fl {
+			break
+		}
 	}
 	defer producer.Close()
 
