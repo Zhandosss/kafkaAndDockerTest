@@ -56,6 +56,10 @@ func New(e *echo.Echo, services iServices, producer sarama.SyncProducer) *Handle
 	}))
 	e.Use(middleware.Recover())
 
+	e.GET("/health", func(c echo.Context) error {
+		return c.String(200, "ok")
+	})
+
 	api := e.Group("/api")
 	{
 		messages := api.Group("/messages")
