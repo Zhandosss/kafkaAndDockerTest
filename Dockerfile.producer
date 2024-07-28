@@ -9,6 +9,5 @@ RUN go build -o producer/main ./producer/main.go
 FROM alpine:3
 COPY --from=builder /build/producer/main /bin/main
 COPY producer/configs /configs
-COPY .env ./
 
 ENTRYPOINT ["/bin/main"]

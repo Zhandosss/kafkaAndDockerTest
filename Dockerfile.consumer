@@ -9,6 +9,5 @@ RUN go build -o consumer/main ./consumer/main.go
 FROM alpine:3
 COPY --from=builder /build/consumer/main /bin/main
 COPY consumer/configs /configs
-COPY .env ./
 
 ENTRYPOINT ["/bin/main"]
