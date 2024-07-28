@@ -46,7 +46,7 @@ services:
     container_name: producer_container
     build:
       context: .
-      dockerfile: Dockerfile.producer
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     depends_on:
