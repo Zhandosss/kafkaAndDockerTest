@@ -6,6 +6,7 @@ import (
 	"github.com/IBM/sarama"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"time"
 )
 
 func (h *Handlers) createMessage(c echo.Context) error {
@@ -17,6 +18,8 @@ func (h *Handlers) createMessage(c echo.Context) error {
 	if message.Content == "" {
 		return c.JSON(http.StatusBadRequest, &ErrorResponse{Message: "content is required"})
 	}
+
+	message.CreateTime = time.Now()
 
 	id, err := h.services.SaveMessage(&message)
 	if err != nil {
