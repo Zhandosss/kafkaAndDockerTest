@@ -17,6 +17,7 @@ type iServices interface {
 	GetMessage(id string) (*model.Message, error)
 	GetMessages() ([]*model.Message, error)
 	DeleteMessages() error
+	GetStatsByDays() (map[string]*model.ByDays, error)
 }
 
 type Handlers struct {
@@ -58,7 +59,7 @@ func New(e *echo.Echo, services iServices, producer sarama.SyncProducer) *Handle
 
 	statistic := e.Group("/statistic")
 	{
-		statistic.GET("/processed_messages", h.getProcessedMessages)
+		statistic.GET("/days", h.getStatsByDays)
 	}
 
 	api := e.Group("/api")

@@ -43,3 +43,13 @@ func (r *Repository) DeleteMessages() error {
 	}
 	return nil
 }
+
+func (r *Repository) GetStatsByHour() ([]*model.ByHours, error) {
+	query := `SELECT DATE_TRUNC('hour', create_time) as hour, count(*) as count FROM messages GROUP BY hour`
+	stats := make([]*model.ByHours, 0)
+	err := r.conn.Select(&stats, query)
+	if err != nil {
+		return nil, err
+	}
+	return stats, nil
+}
