@@ -1,0 +1,173 @@
+basePath: /api/
+definitions:
+  handlers.CreateMessageResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  handlers.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handlers.GetMessageResponse:
+    properties:
+      message:
+        $ref: '#/definitions/model.Message'
+    type: object
+  handlers.GetMessagesResponse:
+    properties:
+      messages:
+        items:
+          $ref: '#/definitions/model.Message'
+        type: array
+    type: object
+  handlers.GetStatResponse:
+    properties:
+      stats:
+        additionalProperties:
+          $ref: '#/definitions/model.ByDays'
+        type: object
+    type: object
+  model.ByDays:
+    properties:
+      hour_stats:
+        additionalProperties:
+          type: integer
+        type: object
+      overall_count:
+        type: integer
+    type: object
+  model.Message:
+    properties:
+      content:
+        type: string
+      create_time:
+        type: string
+      id:
+        type: string
+      is_processed:
+        type: boolean
+    type: object
+info:
+  contact: {}
+  description: Test task for the position of Golang Developer
+  title: Microservice for message processing
+  version: 0.0.1
+paths:
+  /messages:
+    delete:
+      description: Delete all messages
+      operationId: delete-messages
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Delete messages
+      tags:
+      - messages
+    get:
+      consumes:
+      - application/json
+      description: Get all messages
+      operationId: get-messages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.GetMessagesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Get messages
+      tags:
+      - messages
+    post:
+      consumes:
+      - application/json
+      description: Create message
+      operationId: create-message
+      parameters:
+      - description: Message. Provide only content
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/model.Message'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.CreateMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Create message
+      tags:
+      - messages
+  /messages/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get message by id
+      operationId: get-message
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.GetMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Get message
+      tags:
+      - messages
+  /stats:
+    get:
+      description: Get stats by days
+      operationId: get-stats
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.GetStatResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Get stats
+      tags:
+      - stats
+swagger: "2.0"

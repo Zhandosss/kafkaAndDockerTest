@@ -10,6 +10,15 @@ type GetStatResponse struct {
 	Stats map[string]*model.ByDays `json:"stats"`
 }
 
+// getStatsByDays
+// @Summary Get stats
+// @Tags stats
+// @Description Get stats by days
+// @ID get-stats
+// @Produce json
+// @Success 200 {object} GetStatResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /stats [get]
 func (h *Handlers) getStatsByDays(c echo.Context) error {
 	stat, err := h.services.GetStatsByDays()
 	if err != nil {

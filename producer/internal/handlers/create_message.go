@@ -9,6 +9,22 @@ import (
 	"time"
 )
 
+type CreateMessageResponse struct {
+	ID string `json:"id"`
+}
+
+// createMessage
+// @Summary Create message
+// @Tags messages
+// @Description Create message
+// @ID create-message
+// @Accept json
+// @Produce json
+// @Param message body model.Message true "Message. Provide only content"
+// @Success 201 {object} CreateMessageResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /messages [post]
 func (h *Handlers) createMessage(c echo.Context) error {
 	var message model.Message
 
@@ -44,5 +60,5 @@ func (h *Handlers) createMessage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, &ErrorResponse{Message: "failed to send message"})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]string{"id": id})
+	return c.JSON(http.StatusCreated, CreateMessageResponse{ID: id})
 }

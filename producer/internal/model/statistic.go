@@ -9,5 +9,5 @@ type ByHours struct {
 
 type ByDays struct {
 	HourStats    map[int]int `json:"hour_stats"`
-	OverallCount int
+	OverallCount int         `json:"overall_count"`
 }

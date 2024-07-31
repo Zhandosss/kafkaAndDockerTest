@@ -24,6 +24,12 @@ import (
 //go:embed migrations/*.sql
 var embedMigrations embed.FS
 
+//@title Microservice for message processing
+//@version 0.0.1
+//@description Test task for the position of Golang Developer
+
+// @host: 51.250.34.24:8000
+// @basePath /api/
 func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 

@@ -6,6 +6,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/rs/zerolog/log"
+	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "Messaggio/producer/docs"
 )
 
 type ErrorResponse struct {
@@ -63,13 +66,15 @@ func New(e *echo.Echo, services IServices, producer IProducer) *Handlers {
 	}))
 	e.Use(middleware.Recover())
 
-	statistic := e.Group("/statistic")
-	{
-		statistic.GET("/days", h.getStatsByDays)
-	}
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	api := e.Group("/api")
 	{
+		statistic := e.Group("/statistic")
+		{
+			statistic.GET("/days", h.getStatsByDays)
+		}
+
 		messages := api.Group("/messages")
 		{
 			messages.POST("", h.createMessage)

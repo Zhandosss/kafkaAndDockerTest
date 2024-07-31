@@ -12,6 +12,19 @@ type GetMessageResponse struct {
 	Message *model.Message `json:"message"`
 }
 
+// getMessage
+// @Summary Get message
+// @Tags messages
+// @Description Get message by id
+// @ID get-message
+// @Accept json
+// @Produce json
+// @Param id path string true "Message ID"
+// @Success 200 {object} GetMessageResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /messages/{id} [get]
 func (h *Handlers) getMessage(c echo.Context) error {
 	id := c.Param("id")
 	if id == "" {
@@ -35,6 +48,16 @@ type GetMessagesResponse struct {
 	Messages []*model.Message `json:"messages"`
 }
 
+// getMessages
+// @Summary Get messages
+// @Tags messages
+// @Description Get all messages
+// @ID get-messages
+// @Accept json
+// @Produce json
+// @Success 200 {object} GetMessagesResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /messages [get]
 func (h *Handlers) getMessages(c echo.Context) error {
 	messages, err := h.services.GetMessages()
 	if err != nil {
