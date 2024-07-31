@@ -21,7 +21,6 @@ func (r *Repository) EmptyProcess(message *model.Message) error {
 	}
 
 	if rowsAffected == 0 {
-		//TODO: make error in variable
 		return fmt.Errorf("no rows affected")
 	}
 

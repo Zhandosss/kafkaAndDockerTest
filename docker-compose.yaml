@@ -10,7 +10,7 @@ services:
 
     environment:
       - POSTGRES_DB=kafka_test
-      - POSTGRES_PASSWORD=qwerty12
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=kafka_test
     user: root
     ports:
@@ -55,7 +55,7 @@ services:
     volumes: # Add this section
       - .:/build  # Map the . directory to /build inside the container
     environment:
-      - DB_PASSWORD=qwerty12
+      - DB_PASSWORD=${DB_PASSWORD}
     networks:
         - kafka-network
         - db-network
@@ -71,7 +71,7 @@ services:
     volumes:
       - .:/build
     environment:
-        - DB_PASSWORD=qwerty12
+        - DB_PASSWORD=${DB_PASSWORD}
     networks:
         - kafka-network
         - db-network

@@ -71,7 +71,7 @@ func New(e *echo.Echo, services IServices, producer IProducer) *Handlers {
 
 	api := e.Group("/api")
 	{
-		statistic := e.Group("/statistic")
+		statistic := api.Group("/statistic")
 		{
 			statistic.GET("/days", h.getStatsByDays)
 		}

@@ -18,7 +18,6 @@ func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
 	conf := configs.Load()
-	//TODO: Create a new consumer
 	timeout := time.NewTicker(60 * time.Second)
 
 	var consumer sarama.Consumer

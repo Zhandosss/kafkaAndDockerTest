@@ -25,7 +25,7 @@ import (
 var embedMigrations embed.FS
 
 //@title Microservice for message processing
-//@version 0.0.1
+//@version 0.0.2
 //@description Test task for the position of Golang Developer
 
 // @host: 51.250.34.24:8000
@@ -64,7 +64,6 @@ func main() {
 	var producer sarama.SyncProducer
 	var err error
 	fl := false
-	//TODO: add kafka host and port to config
 	for {
 		select {
 		case <-timeout.C:

@@ -39,6 +39,8 @@ func (h *Handlers) deleteMessages(c echo.Context) error {
 // @Success 204
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /messages/{id} [delete]
 func (h *Handlers) deleteMessage(c echo.Context) error {
 	requestID := c.Response().Header().Get(echo.HeaderXRequestID)
 

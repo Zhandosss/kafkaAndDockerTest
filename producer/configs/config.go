@@ -2,7 +2,6 @@ package configs
 
 import (
 	"Messaggio/db"
-	"fmt"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"os"
@@ -49,12 +48,10 @@ func Load() *Config {
 		log.Fatal().Msgf("failed to unmarshal config: %s", err)
 	}
 
-	//err = godotenv.Load()
 	if err != nil {
 		log.Fatal().Msgf("Error loading .env file")
 	}
 
 	config.DB.Postgres.Password = os.Getenv("DB_PASSWORD")
-	fmt.Println(config.DB.Postgres.Password)
 	return config
 }
