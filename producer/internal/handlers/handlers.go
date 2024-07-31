@@ -12,7 +12,8 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
-type iServices interface {
+//go:generate go run github.com/vektra/mockery/v2@v2.43.2 --name IServices --output mocks/
+type IServices interface {
 	SaveMessage(message *model.Message) (string, error)
 	GetMessage(id string) (*model.Message, error)
 	GetMessages() ([]*model.Message, error)
@@ -20,12 +21,17 @@ type iServices interface {
 	GetStatsByDays() (map[string]*model.ByDays, error)
 }
 
-type Handlers struct {
-	services iServices
-	producer sarama.SyncProducer
+//go:generate go run github.com/vektra/mockery/v2@v2.43.2 --name IProducer --output mocks/
+type IProducer interface {
+	SendMessage(msg *sarama.ProducerMessage) (partition int32, offset int64, err error)
 }
 
-func New(e *echo.Echo, services iServices, producer sarama.SyncProducer) *Handlers {
+type Handlers struct {
+	services IServices
+	producer IProducer
+}
+
+func New(e *echo.Echo, services IServices, producer IProducer) *Handlers {
 	h := &Handlers{
 		services: services,
 		producer: producer,

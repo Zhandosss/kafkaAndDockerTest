@@ -16,12 +16,20 @@ func (r *Repository) SaveMessage(message *model.Message) (string, error) {
 
 func (r *Repository) GetMessage(id string) (*model.Message, error) {
 	query := `SELECT id, content, is_processed, create_time FROM messages WHERE id = $1`
+
 	message := make([]*model.Message, 0, 1)
+
 	err := r.conn.Select(&message, query, id)
+
+	if len(message) == 0 {
+		return nil, model.ErrNotFound
+	}
+
 	if err != nil {
 		return nil, err
 
 	}
+
 	return message[0], nil
 }
 

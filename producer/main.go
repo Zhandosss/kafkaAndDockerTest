@@ -53,7 +53,7 @@ func main() {
 
 	e := echo.New()
 
-	timeout := time.NewTicker(30 * time.Second)
+	timeout := time.NewTicker(60 * time.Second)
 
 	var producer sarama.SyncProducer
 	var err error

@@ -41,7 +41,7 @@ func (h *Handlers) createMessage(c echo.Context) error {
 
 	_, _, err = h.producer.SendMessage(kafkaMsg)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, &ErrorResponse{Message: "failed to "})
+		return c.JSON(http.StatusInternalServerError, &ErrorResponse{Message: "failed to send message"})
 	}
 
 	return c.JSON(http.StatusCreated, map[string]string{"id": id})

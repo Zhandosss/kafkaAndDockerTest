@@ -20,7 +20,7 @@ func main() {
 
 	conf := configs.Load()
 	//TODO: Create a new consumer
-	timeout := time.NewTicker(30 * time.Second)
+	timeout := time.NewTicker(60 * time.Second)
 
 	var consumer sarama.Consumer
 	var err error
