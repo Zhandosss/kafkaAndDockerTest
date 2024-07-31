@@ -12,8 +12,6 @@ services:
       - POSTGRES_DB=kafka_test
       - POSTGRES_PASSWORD=qwerty12
       - POSTGRES_USER=kafka_test
-    env_file:
-      - .env
     user: root
     ports:
       - "5436:5432"
@@ -58,8 +56,6 @@ services:
       - .:/build
     environment:
       - DB_PASSWORD=qwerty12
-    env_file:
-      - .env
     networks:
         - kafka-network
         - db-network
