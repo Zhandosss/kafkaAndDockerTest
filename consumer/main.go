@@ -7,7 +7,6 @@ import (
 	"Messaggio/consumer/internal/services"
 	"Messaggio/db"
 	"encoding/json"
-	"fmt"
 	"github.com/IBM/sarama"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -61,7 +60,6 @@ func main() {
 		select {
 		case msg, ok := <-partConsumer.Messages():
 			if !ok {
-				//TODO: Maybe something else should be done here?
 				log.Error().Msg("Consumer closed")
 				return
 			}
@@ -80,7 +78,7 @@ func main() {
 				continue
 			}
 
-			fmt.Println("Received message:", message.Content)
+			log.Info().Msgf("message with ID: %s processed", message.ID)
 		}
 	}
 }
