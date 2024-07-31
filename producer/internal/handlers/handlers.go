@@ -21,6 +21,7 @@ type IServices interface {
 	GetMessage(id string) (*model.Message, error)
 	GetMessages() ([]*model.Message, error)
 	DeleteMessages() error
+	DeleteMessage(id string) error
 	GetStatsByDays() (map[string]*model.ByDays, error)
 }
 
@@ -81,6 +82,7 @@ func New(e *echo.Echo, services IServices, producer IProducer) *Handlers {
 			messages.GET("/:id", h.getMessage)
 			messages.GET("", h.getMessages)
 			messages.DELETE("", h.deleteMessages)
+			messages.DELETE("/:id", h.deleteMessage)
 		}
 	}
 

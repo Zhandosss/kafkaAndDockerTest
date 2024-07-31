@@ -52,6 +52,26 @@ func (r *Repository) DeleteMessages() error {
 	return nil
 }
 
+func (r *Repository) DeleteMessage(id string) error {
+	query := `DELETE FROM messages WHERE id = $1`
+	res, err := r.conn.Exec(query, id)
+
+	if err != nil {
+		return err
+	}
+
+	affected, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if affected == 0 {
+		return model.ErrNotFound
+	}
+
+	return nil
+}
+
 func (r *Repository) GetStatsByHour() ([]*model.ByHours, error) {
 	query := `SELECT DATE_TRUNC('hour', create_time) as hour, count(*) as count FROM messages GROUP BY hour`
 	stats := make([]*model.ByHours, 0)

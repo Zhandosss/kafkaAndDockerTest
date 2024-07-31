@@ -13,6 +13,24 @@ type IServices struct {
 	mock.Mock
 }
 
+// DeleteMessage provides a mock function with given fields: id
+func (_m *IServices) DeleteMessage(id string) error {
+	ret := _m.Called(id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteMessage")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string) error); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // DeleteMessages provides a mock function with given fields:
 func (_m *IServices) DeleteMessages() error {
 	ret := _m.Called()

@@ -9,6 +9,7 @@ type iRepository interface {
 	GetMessage(id string) (*model.Message, error)
 	GetMessages() ([]*model.Message, error)
 	DeleteMessages() error
+	DeleteMessage(id string) error
 	GetStatsByHour() ([]*model.ByHours, error)
 }
 

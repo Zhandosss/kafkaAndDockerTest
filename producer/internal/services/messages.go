@@ -21,6 +21,10 @@ func (s *Services) DeleteMessages() error {
 	return s.repository.DeleteMessages()
 }
 
+func (s *Services) DeleteMessage(id string) error {
+	return s.repository.DeleteMessage(id)
+}
+
 func (s *Services) GetStatsByDays() (map[string]*model.ByDays, error) {
 	stats, err := s.repository.GetStatsByHour()
 	if err != nil {
