@@ -19,7 +19,7 @@ type GetStatResponse struct {
 // @Produce json
 // @Success 200 {object} GetStatResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /stats [get]
+// @Router /statistic/days [get]
 func (h *Handlers) getStatsByDays(c echo.Context) error {
 	requestID := c.Response().Header().Get(echo.HeaderXRequestID)
 

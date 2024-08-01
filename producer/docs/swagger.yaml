@@ -179,7 +179,7 @@ paths:
       summary: Get message
       tags:
       - messages
-  /stats:
+  /statistic/days:
     get:
       description: Get stats by days
       operationId: get-stats

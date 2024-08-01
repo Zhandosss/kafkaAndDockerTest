@@ -200,7 +200,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/stats": {
+        "/statistic/days": {
             "get": {
                 "description": "Get stats by days",
                 "produces": [
