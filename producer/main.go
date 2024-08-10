@@ -21,6 +21,8 @@ import (
 	"time"
 )
 
+// this is test commit for test branch
+//
 //go:embed migrations/*.sql
 var embedMigrations embed.FS
 
