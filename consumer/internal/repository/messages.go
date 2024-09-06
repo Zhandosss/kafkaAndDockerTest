@@ -1,16 +1,15 @@
 package repository
 
 import (
-	"Messaggio/consumer/internal/model"
 	"fmt"
 	"github.com/rs/zerolog/log"
 )
 
-func (r *Repository) EmptyProcess(message *model.Message) error {
-	log.Info().Msg(message.ID + " " + message.Content)
+func (r *Repository) EmptyProcess(id string) error {
+	log.Info().Msgf("message id is %s", id)
 	query := `UPDATE messages SET is_processed = true WHERE id = $1`
 
-	res, err := r.conn.Exec(query, message.ID)
+	res, err := r.conn.Exec(query, id)
 	if err != nil {
 		return err
 	}

@@ -1,9 +1,7 @@
 package services
 
-import "Messaggio/consumer/internal/model"
-
 type iRepository interface {
-	EmptyProcess(message *model.Message) error
+	EmptyProcess(id string) error
 }
 
 type Services struct {

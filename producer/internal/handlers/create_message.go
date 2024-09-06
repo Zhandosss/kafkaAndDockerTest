@@ -53,7 +53,7 @@ func (h *Handlers) createMessage(c echo.Context) error {
 
 	message.ID = id
 
-	bytes, err := json.Marshal(message)
+	_, err = json.Marshal(message)
 	if err != nil {
 		log.Error().Err(err).Msgf("RequestID: %s, Failed to marshal message", requestID)
 		return c.JSON(http.StatusInternalServerError, &ErrorResponse{Message: "failed to marshal message"})
@@ -62,7 +62,7 @@ func (h *Handlers) createMessage(c echo.Context) error {
 	kafkaMsg := &sarama.ProducerMessage{
 		Topic: "messages",
 		Key:   sarama.StringEncoder(id),
-		Value: sarama.StringEncoder(bytes),
+		Value: sarama.StringEncoder(""),
 	}
 
 	_, _, err = h.producer.SendMessage(kafkaMsg)

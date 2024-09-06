@@ -2,11 +2,9 @@ package main
 
 import (
 	"Messaggio/consumer/configs"
-	"Messaggio/consumer/internal/model"
 	"Messaggio/consumer/internal/repository"
 	"Messaggio/consumer/internal/services"
 	"Messaggio/db"
-	"encoding/json"
 	"github.com/IBM/sarama"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -63,21 +61,21 @@ func main() {
 				return
 			}
 
-			var message model.Message
+			var id string
 
-			err = json.Unmarshal(msg.Value, &message)
+			id = string(msg.Key)
 			if err != nil {
 				log.Error().Err(err).Msg("Error unmarshalling message")
 				continue
 			}
 
-			err = serv.TestProcessMessage(&message)
+			err = serv.TestProcessMessage(id)
 			if err != nil {
 				log.Error().Err(err).Msg("Error processing message")
 				continue
 			}
 
-			log.Info().Msgf("message with ID: %s processed", message.ID)
+			log.Info().Msgf("message with ID: %s processed", id)
 		}
 	}
 }
